@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        // Nombres exactos extraídos de tus capturas de configuración
+
         jdk 'OpenJDK-21'
         maven 'Maven 3.9'
     }
@@ -16,7 +16,7 @@ pipeline {
 
         stage('Compilar Proyecto') {
             steps {
-                // Al estar en un entorno Linux, usamos 'sh'
+
                 sh 'mvn clean compile'
             }
         }
@@ -29,7 +29,7 @@ pipeline {
 
         stage('Análisis Estático') {
             steps {
-                // Ejecuta CheckStyle y SpotBugs de manera secuencial
+
                 sh 'mvn checkstyle:checkstyle spotbugs:spotbugs'
             }
         }
@@ -37,7 +37,7 @@ pipeline {
 
     post {
         always {
-            // Publica los reportes visuales en las pestañas de Jenkins
+
             junit '**/target/surefire-reports/*.xml'
             jacoco execPattern: '**/target/*.exec', classPattern: '**/target/classes'
             recordIssues enabledForFailure: true, tool: checkStyle()
